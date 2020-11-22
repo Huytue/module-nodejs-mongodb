@@ -1,6 +1,6 @@
 {
   "name": "module-nodejs-mongodb",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Một module sử dụng Nodejs kết nối cùng mongodb",
   "main": "index.js",
   "scripts": {
