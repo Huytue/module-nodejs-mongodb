@@ -11,7 +11,7 @@ const Classes = require("./models/classes");
 const Student = require("./models/student");
 
 //Tự động tạo class
-module.exports.generateClass = () => {
+module.exports.generateClass = async function () {
   var classess = [];
   for (let index = 0; index < 10; index++) {
     let classes = {
@@ -19,7 +19,7 @@ module.exports.generateClass = () => {
     }
     classess.push(classes);
   }
-  Classes.collection.insertMany(classess, (err) => {
+  await Classes.collection.insertMany(classess, (err) => {
     if (err) {
       console.log("error");
     } else {
@@ -28,35 +28,31 @@ module.exports.generateClass = () => {
   });
 }
 //Tự động tạo student
-module.exports.generateStudent = () => {
-  var students = [];
+module.exports.generateStudent = async () => {
+  const students = [];
   for (let index = 0; index < 10; index++) {
     //Tìm ngẫu nhiên 1 lớp
-    var classes;
-    Classes.count().exec(function (err, count) {
+    await Classes.countDocuments((err, count) => {
       var random = Math.floor(Math.random() * count)
       Classes.findOne().skip(random).exec(
-        function (err, result) {
-          classes = result._id;
+        (err, result) => {
+          var student = {
+            name: "Nguyễn Văn " + index,
+            email: "nguyenvan" + index + "@tdc.edu.vn",
+            class: result._id
+          };
+          students.push(student);
         })
     })
-    //Tạo student
-    let student = {
-      name: "Nguyễn Văn " + index,
-      email: "nguyenvan" + index + "@tdc.edu.vn",
-      class: classes
-    };
-    students.push(student);
   }
   Student.collection.insertMany(students, (err) => {
     if (err) {
-      console.log("error");
+      console.log(err);
     } else {
       console.log("finish");
     }
   });
 }
-
 
 // Tạo hàm gọi app để sử dụng
 module.exports.app = () => {
@@ -64,8 +60,8 @@ module.exports.app = () => {
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.set("view engine", "ejs");
-  app.use(express.static("node_modules/module-nodejs-package/public"));
-  app.set("views", "node_modules/module-nodejs-package/views");
+  app.use(express.static("node_modules/module-nodejs-mongodb/public"));
+  app.set("views", "node_modules/module-nodejs-mongodb/views");
 
   app.use("/student", routeStudent);
   app.use("/classes", routeClasses);
