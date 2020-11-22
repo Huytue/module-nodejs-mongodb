@@ -13,7 +13,7 @@ const Student = require("./models/student");
 //Tự động tạo class
 module.exports.generateClass = async function () {
   var classess = [];
-  for (let index = 0; index < 10; index++) {
+  for (let index = 1; index < 10; index++) {
     let classes = {
       name: "Công nghệ thông tin " + index,
     }
@@ -30,7 +30,7 @@ module.exports.generateClass = async function () {
 //Tự động tạo student
 module.exports.generateStudent = async () => {
   const students = [];
-  for (let index = 0; index < 10; index++) {
+  for (let index = 1; index < 500; index++) {
     //Tìm ngẫu nhiên 1 lớp
     await Classes.countDocuments((err, count) => {
       var random = Math.floor(Math.random() * count)

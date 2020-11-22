@@ -14,18 +14,17 @@
 
 - **Mongodb Online**
   > modules.mongodb("mongodb+srv://<username>:<password>@<url>/<db-name>?retryWrites=true&w=majority");
-  - **Mongodb Local**
-    > modules.mongodb("ManageStudent");
+- **Mongodb Local**
+  > modules.mongodb("ManageStudent");
 
-4. Generate dữ liệu
+4. Load app
+   > modules.app ()
+5. Generate dữ liệu
 
 - Create Class
   > modules.generateClass();
 - Create Student
   > modules.generateStudent();
-
-5. Load app
-   > modules.app = ()
 
 ## Run app in command line
 
