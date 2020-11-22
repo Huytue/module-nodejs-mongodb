@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/jquery-3.5.1.min.js"></script>
+  <title>Student</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand" href="#">TDC</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownId">
+                    <a class="dropdown-item" href="/classes">Class</a>
+                    <a class="dropdown-item" href="/student">Student</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+  <div class="container">
+    <h1 class="title">Student</h1>
+    <a href="/student/add" class="btn btn-success float-left m-2">Add</a>
+    <form class="form-inline my-2 my-lg-0 float-right m-2" action="/student/search">
+      <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Code</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Class</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% students.forEach(function(item){ %>
+        <tr class="student">
+          <th scope="row"><%- item.id %></th>
+          <th><%- item.name %></th>
+          <td><%- item.email %></td>
+          <td><%- item.class.name %></td>
+          <td>
+            <a href="/student/edit/<%- item._id%>" class="btn btn-primary">Edit</a>
+            <a href=" /student/delete/<%= item._id %>" type="submit"
+              onclick="return confirm('Are you sure you want to delete <%- item.name %>') "
+              class="btn btn-danger">Delete</a>
+          </td>
+          <td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <!-- pagination -->
+    <div class="row">
+      <!-- hiển thị phân trang nếu có trang -->
+      <% if(total > 0) { %>
+      <nav class="mx-auto">
+        <ul class="pagination mg-1 d-flex justify-content-center align-items-center">
+          <!-- FIRST ITEM -->
+          <% if(page == 1) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="<%-baseUrl%><%-start%>"> &laquo;&laquo;</a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="<%-baseUrl%><%-page-1%>">
+              &laquo;
+            </a>
+          </li>
+          <% } else { %>
+          <li class="page-item">
+            <a class="page-link" href="<%-baseUrl%><%-start%>">&laquo;&laquo;</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="<%-baseUrl%><%-page-1%>">
+              &laquo;
+            </a>
+          </li>
+          <% } %>
+          <!-- ITEMS  -->
+          <% var i = (Number(page) > 3 ? Number(page) - 2 : 1) %>
+          <% if(i !== 1) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">...</a>
+          </li>
+          <% } %>
+          <% for(; i <= (Number(page) + 2) && i <= total; i++) { %>
+          <% if(start == page) { %>
+          <li class="page-item active">
+            <a class="page-link" href="<%-baseUrl%><%-i%>">
+              <%= i %>
+            </a>
+          </li>
+          <% } else { %>
+          <li class="page-item">
+            <a class="page-link" href="<%-baseUrl%><%-i%>">
+              <%= i %>
+            </a>
+          </li>
+          <% } %>
+          <% if (i == Number(page) + 2 && i < total) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">...</a>
+          </li>
+          <% } %>
+          <% } %>
+          <!-- LAST ITEM -->
+          <% if(page == total) { %>
+          <li class="page-item disabled">
+            <a class="page-link" href="<%-baseUrl%><%-page+1%>">
+              &raquo;
+            </a>
+          </li>
+          <li class="page-item disabled">
+            <a class="page-link" href="#">
+              &raquo;&raquo;
+            </a>
+          </li>
+          <% } else { %>
+          <li class="page-item ">
+            <a class="page-link" href="<%-baseUrl%><%-page+1%>">
+              &raquo;
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="<%-baseUrl%><%-total%>">
+              &raquo;&raquo;
+            </a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
