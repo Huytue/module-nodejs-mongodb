@@ -1,6 +1,6 @@
 {
   "name": "module-nodejs-mongodb",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Một module sử dụng Nodejs kết nối cùng mongodb",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,3 @@
   },
   "homepage": "https://github.com/Huytue/module-nodejs-mongodb#readme"
 }
-
-
-
