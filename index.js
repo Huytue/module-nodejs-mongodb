@@ -71,7 +71,7 @@ module.exports.app = () => {
   app.listen(3000);
 }
 
-//Tajo hàm kết nối Mongodb local
+//Tạo hàm kết nối Mongodb local
 module.exports.mongoLocal = (nameDB) => {
   const mongoose = require("mongoose");
   mongoose.connect("mongodb://localhost/" + nameDB, {
